@@ -4,70 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mayank Mishra - Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <style>
-           
         :root {
             --bg-color: #fef9e7;
             --text-color: #2c3e50;
-            --primary-color: #e67e22;
+            --primary-color: #ff6b35;
             --secondary-color: #f39c12;
-            --accent-color: #d35400;
-            --nature-green: #27ae60;
-            --ocean-blue: #2980b9;
-            --sunset-pink: #c0392b;
-            --cosmic-purple: #8e44ad;
-            --star-gold: #f1c40f;
-            --deep-space: #34495e;
-            --aurora-green: #16a085;
-            --solar-orange: #d68910;
-            --galaxy-blue: #3498db;
-            --nebula-purple: #bb8fce;
-            --card-bg: rgba(255, 255, 255, 0.8);
+            --accent-color: #e67e22;
+            --card-bg: rgba(255, 255, 255, 0.9);
             --card-border: rgba(0, 0, 0, 0.1);
             --nav-bg: rgba(254, 249, 231, 0.95);
-            --primary-color1: #ff6b35;
-            --secondary-color1: #f7931e;
-            --nature-green1: #2ecc71;
-            --cosmic-purple1: #3f0e53;
-            --ocean-blue1: #3498db;
-            --tnature-green: #ff3131;
-             --tcosmic-purple: #f3f326;
-             --tocean-blue: #ec6619;
-             --primary-color2: #e67e22;
-            --secondary-color2: #ff9e01;
-             
+            --sun-color: #ffeb3b;
+            --sun-glow: #ffc107;
+            --warm-orange: #ff9800;
+            --light-blue: #e3f2fd;
         }
+
         [data-theme="dark"] {
-             --bg-color: #0a0a0a;
+            --bg-color: #0a0a0a;
             --text-color: #ffffff;
-            --primary-color: #ff6b35;
-            --secondary-color: #f7931e;
-            --accent-color: #ffb700;
-            --nature-green: #2ecc71;
-            --ocean-blue: #3498db;
-            --sunset-pink: #55150e;
-            --cosmic-purple: #3f0e53;
-            --star-gold: #573806;
-            --deep-space: #2c3e50;
-            --aurora-green: #025141;
-            --solar-orange: #e67e22;
-            --galaxy-blue: #5dade2;
-            --nebula-purple: #af7ac5;
+            --primary-color: #64b5f6;
+            --secondary-color: #81c784;
+            --accent-color: #ba68c8;
             --card-bg: rgba(255, 255, 255, 0.05);
             --card-border: rgba(255, 255, 255, 0.1);
             --nav-bg: rgba(10, 10, 10, 0.9);
-            --primary-color1: #421a0b;
-             --secondary-color1: #382107;
-             --nature-green1: #0e3f23;
-             --cosmic-purple1: #4f016e;
-             --ocean-blue1: #071b29;
-             --tnature-green: #f1ff2a;
-             --tcosmic-purple: #f03232;
-             --tocean-blue: #1994ec;
-             --primary-color2: #f37200;
-            --secondary-color2: #6a4202;
+            --moon-color: #f5f5f5;
+            --moon-glow: #e0e0e0;
+            --star-color: #ffffff;
+            --dark-blue: #1a237e;
         }
 
         * {
@@ -86,87 +54,15 @@
             position: relative;
         }
 
-        /* Cosmic Background Animation */
-        body::before {
-            content: '';
+        /* Three.js Canvas */
+        #three-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-           background: 
-                radial-gradient(circle at 10% 20%, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(52, 152, 219, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(46, 204, 113, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 90% 10%, rgba(155, 89, 182, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 20% 90%, rgba(241, 196, 15, 0.15) 0%, transparent 50%);
-            z-index: -2;
-            animation: cosmicShift 25s ease-in-out infinite;
-        }
-
-        @keyframes cosmicShift {
-            0%, 100% { transform: translateX(0) translateY(0) rotate(0deg); }
-            20% { transform: translateX(-30px) translateY(-20px) rotate(72deg); }
-            40% { transform: translateX(20px) translateY(30px) rotate(144deg); }
-            60% { transform: translateX(-10px) translateY(-30px) rotate(216deg); }
-            80% { transform: translateX(30px) translateY(10px) rotate(288deg); }
-        }
-
-        /* Animated Stars */
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
             z-index: -1;
-        }
-
-        .star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--star-gold);
-            border-radius: 50%;
-            animation: twinkle 3s ease-in-out infinite;
-        }
-
-        .star:nth-child(odd) {
-            animation-delay: 1s;
-            background: var(--galaxy-blue);
-        }
-
-        .star:nth-child(3n) {
-            animation-delay: 2s;
-            background: var(--aurora-green);
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.5); }
-        }
-
-        /* Floating Particles */
-        .particle {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: var(--nature-green);
-            border-radius: 50%;
-            animation: float 8s ease-in-out infinite;
-            opacity: 0.7;
-        }
-
-        .particle:nth-child(2n) { background: var(--ocean-blue); animation-delay: 2s; }
-        .particle:nth-child(3n) { background: var(--sunset-pink); animation-delay: 4s; }
-        .particle:nth-child(4n) { background: var(--cosmic-purple); animation-delay: 6s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            25% { transform: translateY(-30px) rotate(90deg); }
-            50% { transform: translateY(-60px) rotate(180deg); }
-            75% { transform: translateY(-30px) rotate(270deg); }
+            pointer-events: none;
         }
 
         /* Navbar */
@@ -182,10 +78,6 @@
             transition: all 0.3s ease;
         }
 
-        .navbar:hover {
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
-        }
-
         .nav-content {
             max-width: 1200px;
             margin: 0 auto;
@@ -198,16 +90,12 @@
         .logo {
             font-size: 1.8rem;
             font-weight: 800;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--nature-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: logoGlow 3s ease-in-out infinite;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
         }
 
-        @keyframes logoGlow {
-            0%, 100% { filter: hue-rotate(0deg); }
-            50% { filter: hue-rotate(180deg); }
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .nav-links {
@@ -226,28 +114,11 @@
             border-radius: 20px;
         }
 
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--nature-green), var(--ocean-blue));
-            opacity: 0;
-            border-radius: 20px;
-            z-index: -1;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            opacity: 0.2;
-        }
-
         .nav-links a:hover {
             opacity: 1;
             transform: translateY(-3px);
             color: var(--primary-color);
+            background: var(--card-bg);
         }
 
         /* Enhanced Theme Toggle */
@@ -256,16 +127,16 @@
             height: 30px;
             border-radius: 50px;
             border: none;
-            background: linear-gradient(45deg, var(--primary-color2), var(--secondary-color2));
+            background: var(--primary-color);
             position: relative;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .theme-toggle:hover {
             transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .theme-toggle::after {
@@ -297,39 +168,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            background: linear-gradient(135deg, 
-                var(--primary-color1) 0%, 
-                var(--secondary-color1) 25%, 
-                var(--nature-green1) 50%, 
-                var(--ocean-blue1) 75%, 
-                var(--cosmic-purple1) 100%);
             overflow: hidden;
-            animation: heroGradient 8s ease-in-out infinite;
-        }
-
-        @keyframes heroGradient {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-            animation: heroOverlay 12s ease-in-out infinite;
-        }
-
-        @keyframes heroOverlay {
-            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.3; }
-            33% { transform: scale(1.1) rotate(120deg); opacity: 0.6; }
-            66% { transform: scale(0.9) rotate(240deg); opacity: 0.4; }
         }
 
         .hero-content {
@@ -348,12 +187,12 @@
             width: 220px;
             height: 220px;
             border-radius: 50%;
-            border: 5px solid rgba(255, 255, 255, 0.3);
+            border: 5px solid var(--primary-color);
             object-fit: cover;
             position: relative;
             z-index: 2;
             transition: all 0.5s ease;
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
         }
 
         .profile-container::before {
@@ -364,84 +203,51 @@
             right: -15px;
             bottom: -15px;
             border-radius: 50%;
-            background: conic-gradient(
-                from 0deg,
-                var(--primary-color),
-                var(--secondary-color),
-                var(--nature-green),
-                var(--ocean-blue),
-                var(--cosmic-purple),
-                var(--sunset-pink),
-                var(--primary-color)
-            );
+            background: var(--secondary-color);
             z-index: 1;
-            animation: profileRotate 4s linear infinite;
+            animation: profilePulse 3s ease-in-out infinite;
         }
 
-        .profile-container::after {
-            content: '';
-            position: absolute;
-            top: -25px;
-            left: -25px;
-            right: -25px;
-            bottom: -25px;
-            border-radius: 50%;
-            background: conic-gradient(
-                from 180deg,
-                var(--aurora-green),
-                var(--galaxy-blue),
-                var(--nebula-purple),
-                var(--star-gold),
-                var(--solar-orange),
-                var(--aurora-green)
-            );
-            z-index: 0;
-            animation: profileRotate 6s linear infinite reverse;
-            opacity: 0.7;
-        }
-
-        @keyframes profileRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes profilePulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 1; }
         }
 
         .profile-container:hover .profile-img {
             transform: scale(1.1);
-            box-shadow: 0 0 80px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 80px var(--primary-color);
         }
 
         .hero h1 {
             font-size: 4rem;
             font-weight: 900;
             margin-bottom: 1rem;
-            color: white;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
-            animation: titleGlow 2s ease-in-out infinite;
+            color: var(--text-color);
+            text-shadow: 0 0 20px var(--primary-color);
+            animation: titleFloat 3s ease-in-out infinite;
         }
 
-        @keyframes titleGlow {
-            0%, 100% { text-shadow: 0 0 30px rgba(255, 255, 255, 0.5); }
-            50% { text-shadow: 0 0 50px rgba(255, 255, 255, 0.8), 0 0 70px rgba(255, 107, 53, 0.6); }
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
         .hero p {
             font-size: 1.8rem;
             margin-bottom: 2rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--text-color);
+            opacity: 0.9;
         }
 
         .typing-effect {
-            border-right: 3px solid white;
+            border-right: 3px solid var(--primary-color);
             animation: blink 1s infinite;
-            background: linear-gradient(45deg, var(--tnature-green), var(--tocean-blue), var(--tcosmic-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary-color);
         }
 
         @keyframes blink {
             0%, 50% { border-color: transparent; }
-            51%, 100% { border-color: white; }
+            51%, 100% { border-color: var(--primary-color); }
         }
 
         /* Sections */
@@ -450,25 +256,7 @@
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
-        }
-
-        .section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(46, 204, 113, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 90% 80%, rgba(52, 152, 219, 0.05) 0%, transparent 50%);
-            pointer-events: none;
-            animation: sectionGlow 15s ease-in-out infinite;
-        }
-
-        @keyframes sectionGlow {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.7; }
+            z-index: 1;
         }
 
         .section-title {
@@ -476,18 +264,9 @@
             font-weight: 800;
             text-align: center;
             margin-bottom: 3rem;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--nature-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary-color);
             position: relative;
             z-index: 1;
-            animation: titleShimmer 3s ease-in-out infinite;
-        }
-
-        @keyframes titleShimmer {
-            0%, 100% { filter: hue-rotate(0deg); }
-            50% { filter: hue-rotate(180deg); }
         }
 
         /* Enhanced Cards */
@@ -500,53 +279,13 @@
             backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, 
-            transparent, 
-            rgba(46, 204, 113, 0.2), 
-            rgba(52, 152, 219, 0.2), 
-            rgba(155, 89, 182, 0.2), 
-            transparent);
-        transition: left 0.8s ease;
-        pointer-events: none; /* ✅ Fix */
-    }
-        .card:hover::before {
-            left: 100%;
-        }
-
-            .card::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(45deg, 
-            rgba(46, 204, 113, 0.1), 
-            rgba(52, 152, 219, 0.1), 
-            rgba(155, 89, 182, 0.1));
-        opacity: 0;
-        transition: opacity 0.5s ease;
-        pointer-events: none; /* ✅ Fix */
-    }
-        .card:hover::after {
-            opacity: 1;
-        }
         .card:hover {
             transform: translateY(-15px) scale(1.02);
-            box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.3),
-                0 0 50px rgba(46, 204, 113, 0.3);
-            border-color: var(--nature-green);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary-color);
         }
 
         /* Skills Grid */
@@ -557,23 +296,22 @@
         }
 
         .skill-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 25px;
-    padding: 2.5rem;
-    text-align: center;
-    transition: all 0.5s ease;
-    backdrop-filter: blur(20px);
-    position: relative;
-    overflow: hidden; /* Keep for gradient bar */
-    box-sizing: border-box;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    word-wrap: break-word;
-}
-
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 25px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.5s ease;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            word-wrap: break-word;
+        }
 
         .skill-card::before {
             content: '';
@@ -582,11 +320,7 @@
             left: 0;
             right: 0;
             height: 5px;
-            background: linear-gradient(90deg, 
-                var(--nature-green), 
-                var(--ocean-blue), 
-                var(--cosmic-purple), 
-                var(--sunset-pink));
+            background: var(--primary-color);
             transform: translateX(-100%);
             transition: transform 0.5s ease;
         }
@@ -595,42 +329,23 @@
             transform: translateX(0);
         }
 
-        .skill-card:nth-child(1):hover {
-            box-shadow: 0 20px 40px rgba(46, 204, 113, 0.4);
-            border-color: var(--nature-green);
-        }
-
-        .skill-card:nth-child(2):hover {
-            box-shadow: 0 20px 40px rgba(52, 152, 219, 0.4);
-            border-color: var(--ocean-blue);
-        }
-
-        .skill-card:nth-child(3):hover {
-            box-shadow: 0 20px 40px rgba(155, 89, 182, 0.4);
-            border-color: var(--cosmic-purple);
-        }
-
-        .skill-card:nth-child(4):hover {
-            box-shadow: 0 20px 40px rgba(231, 76, 60, 0.4);
-            border-color: var(--sunset-pink);
-        }
-
         .skill-card:hover {
             transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary-color);
         }
 
         .skill-card h3,
-.skill-card p {
-    word-break: break-word;
-    overflow-wrap: break-word;
-}
-
+        .skill-card p {
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
 
         /* Enhanced Buttons */
         .btn {
             display: inline-block;
             padding: 1.2rem 2.5rem;
-            background: linear-gradient(45deg, var(--primary-color2), var(--secondary-color2), var(--nature-green));
+            background: var(--primary-color);
             color: white;
             text-decoration: none;
             border-radius: 50px;
@@ -638,15 +353,7 @@
             transition: all 0.5s ease;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            background-size: 300% 300%;
-            animation: btnGradient 3s ease infinite;
-        }
-
-        @keyframes btnGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
         .btn::before {
@@ -656,7 +363,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            background: rgba(255, 255, 255, 0.2);
             transition: left 0.5s ease;
         }
 
@@ -666,103 +373,103 @@
 
         .btn:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+            background: var(--secondary-color);
         }
 
         /* Contact Section */
- #contact .contact-info {
-        text-align: center;
-        background: var(--card-bg);
-        border-radius: 25px;
-        padding: 3rem;
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--card-border);
-        position: relative;
-        overflow: hidden;
-        z-index: 1;
-    }
+        #contact .contact-info {
+            text-align: center;
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 3rem;
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
 
-    #contact .contact-info::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(45deg, 
-            rgba(46, 204, 113, 0.1), 
-            rgba(52, 152, 219, 0.1), 
-            rgba(155, 89, 182, 0.1));
-        opacity: 0;
-        transition: opacity 0.5s ease;
-        z-index: 0;
-    }
+        #contact .contact-info p {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
 
-    #contact .contact-info:hover::before {
-        opacity: 1;
-    }
+        #contact .contact-info p:hover {
+            transform: scale(1.05);
+            color: var(--primary-color);
+        }
 
-    #contact .contact-info p {
-        font-size: 1.3rem;
-        margin-bottom: 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        transition: all 0.3s ease;
-        position: relative;
-        z-index: 1;
-    }
+        #contact .contact-info p a {
+            color: inherit;
+            text-decoration: underline;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+        }
 
-    #contact .contact-info p:hover {
-        transform: scale(1.05);
-        color: var(--primary-color);
-    }
+        #contact form {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 2;
+        }
 
-    #contact .contact-info p a {
-        color: inherit;
-        text-decoration: underline;
-        cursor: pointer;
-        position: relative;
-        z-index: 2;
-    }
+        #contact form input,
+        #contact form textarea {
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+            font-size: 1rem;
+            background: var(--card-bg);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
 
-    #contact form {
-        margin-top: 2rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        max-width: 500px;
-        margin-left: auto;
-        margin-right: auto;
-        position: relative;
-        z-index: 2;
-    }
+        #contact form input:focus,
+        #contact form textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-    #contact form input,
-    #contact form textarea {
-        padding: 1rem;
-        border-radius: 10px;
-        border: 1px solid var(--card-border);
-        font-size: 1rem;
-        background: var(--card-bg);
-        color: var(--text-color);
-    }
+        #contact form button {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 10px;
+            background: var(--primary-color);
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-    #contact form button {
-        padding: 0.8rem 2rem;
-        border: none;
-        border-radius: 10px;
-        background: var(--primary-color);
-        color: #fff;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
+        #contact form button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
 
-    #contact form button:hover {
-        background: var(--secondary-color);
-    }
+        .success-message {
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--card-bg);
+            border-radius: 10px;
+            text-align: center;
+        }
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -802,26 +509,18 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            background: var(--primary-color);
             border-radius: 6px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(45deg, var(--secondary-color), var(--nature-green));
+            background: var(--secondary-color);
         }
     </style>
 </head>
 <body data-theme="light">
-    <!-- Animated Stars -->
-    <div class="stars"></div>
-    
-    <!-- Floating Particles -->
-    <div class="particle" style="top: 20%; left: 10%;"></div>
-    <div class="particle" style="top: 60%; left: 80%;"></div>
-    <div class="particle" style="top: 80%; left: 20%;"></div>
-    <div class="particle" style="top: 30%; left: 70%;"></div>
-    <div class="particle" style="top: 70%; left: 40%;"></div>
-    <div class="particle" style="top: 10%; left: 90%;"></div>
+    <!-- Three.js Canvas -->
+    <canvas id="three-canvas"></canvas>
 
     <nav class="navbar">
         <div class="nav-content">
@@ -841,6 +540,7 @@
         <div class="hero-content">
             <div class="profile-container" data-aos="zoom-in">
                 <img src="profile1.jpg" alt="Mayank Mishra" class="profile-img">
+
             </div>
             <h1 data-aos="fade-up" data-aos-delay="200">Mayank Mishra</h1>
             <p data-aos="fade-up" data-aos-delay="400">
@@ -857,13 +557,13 @@
         <div class="card" data-aos="fade-up" data-aos-delay="200">
             <p>
                 I am a <a href="https://www.codechef.com/users/mishra_mayank" target="_blank" rel="noopener" style="color: var(--primary-color);">🏆 4★ CodeChef</a> coder, 
-                <a href="https://codeforces.com/profile/03mishramayank123" target="_blank" rel="noopener" style="color: var(--ocean-blue);">💎 Expert on Codeforces</a>, 
-                with a <a href="https://www.geeksforgeeks.org/user/mayank2112l6z8/" target="_blank" rel="noopener" style="color: var(--nature-green);">⭐ 5★ rating on GeeksforGeeks</a>, 
-                a <a href="https://leetcode.com/u/mayank211203mishra/" target="_blank" rel="noopener" style="color: var(--cosmic-purple);">🧠 LeetCode</a> enthusiast, 
-                and over <strong style="color: var(--sunset-pink);">🔥 1000+ problems solved across all platforms</strong>, showcasing my strong foundation in competitive programming, 
-                <strong style="color: var(--aurora-green);">🌊 Data Structures</strong>, and <strong style="color: var(--galaxy-blue);">⚡ Algorithms</strong>. As a B.Tech student specializing in 
-                <strong style="color: var(--primary-color);">🤖 AI and Machine Learning</strong>, I combine my technical knowledge with hands-on expertise in 
-                <strong style="color: var(--solar-orange);">🌐 Web Development</strong> to develop innovative, efficient solutions. Proficient in languages like C++, Python, Java, and 
+                <a href="https://codeforces.com/profile/03mishramayank123" target="_blank" rel="noopener" style="color: var(--secondary-color);">💎 Expert on Codeforces</a>, 
+                with a <a href="https://www.geeksforgeeks.org/user/mayank2112l6z8/" target="_blank" rel="noopener" style="color: var(--accent-color);">⭐ 5★ rating on GeeksforGeeks</a>, 
+                a <a href="https://leetcode.com/u/mayank211203mishra/" target="_blank" rel="noopener" style="color: var(--primary-color);">🧠 LeetCode</a> enthusiast, 
+                and over <strong style="color: var(--secondary-color);">🔥 1000+ problems solved across all platforms</strong>, showcasing my strong foundation in competitive programming, 
+                <strong style="color: var(--accent-color);">🌊 Data Structures</strong>, and <strong style="color: var(--primary-color);">⚡ Algorithms</strong>. As a B.Tech student specializing in 
+                <strong style="color: var(--secondary-color);">🤖 AI and Machine Learning</strong>, I combine my technical knowledge with hands-on expertise in 
+                <strong style="color: var(--accent-color);">🌐 Web Development</strong> to develop innovative, efficient solutions. Proficient in languages like C++, Python, Java, and 
                 JavaScript, I am passionate about solving complex problems and contributing to impactful, real-world projects.
             </p>
         </div>
@@ -922,35 +622,33 @@
         </div>
     </section>
 
-   <section id="contact" class="section">
-    <h2 class="section-title" data-aos="fade-up">Contact</h2>
-    <div class="contact-info" data-aos="fade-up" data-aos-delay="200">
-        <p>📍 Faridabad, India</p>
-        <p>📞 +91-9311085525</p>
-        <p>📧 
-            <a href="mailto:mayank211203mishra@gmail.com" 
-   onclick="window.open('https://mail.google.com/mail/?view=cm&fs=1&to=mayank211203mishra@gmail.com', '_blank')">
-  mayank211203mishra@gmail.com
-</a>
+    <section id="contact" class="section">
+        <h2 class="section-title" data-aos="fade-up">Contact</h2>
+        <div class="contact-info" data-aos="fade-up" data-aos-delay="200">
+            <p>📍 Faridabad, India</p>
+            <p>📞 +91-9311085525</p>
+            <p>📧 
+                <a href="mailto:mayank211203mishra@gmail.com" 
+                   onclick="window.open('https://mail.google.com/mail/?view=cm&fs=1&to=mayank211203mishra@gmail.com', '_blank')">
+                    mayank211203mishra@gmail.com
+                </a>
+            </p>
+            <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <a href="https://www.linkedin.com/in/mayank2104/" class="btn" target="_blank">LinkedIn Profile</a>
+                <a href="https://drive.google.com/file/d/14EllXNd4Gglt103RPyhwMG3kCYP6e7li/view?usp=sharing" class="btn" target="_blank">View Resume</a>
+            </div>
 
-        </p>
-        <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-            <a href="https://www.linkedin.com/in/mayank2104/" class="btn" target="_blank">LinkedIn Profile</a>
-            <a href="https://drive.google.com/file/d/14EllXNd4Gglt103RPyhwMG3kCYP6e7li/view?usp=sharing" class="btn" target="_blank">View Resume</a>
+            <form id="contact-form">
+                <input type="text" name="name" id="name" placeholder="Your Name" required>
+                <input type="email" name="email" id="email" placeholder="Your Email" required>
+                <textarea name="message" id="message" rows="5" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+                <div class="success-message" id="success-message" style="display:none;">Your message was sent!</div>
+            </form>
         </div>
+    </section>
 
-        <form id="contact-form">
-            <input type="text" name="name" id="name" placeholder="Your Name" required>
-            <input type="email" name="email" id="email" placeholder="Your Email" required>
-            <textarea name="message" id="message" rows="5" placeholder="Your Message" required></textarea>
-            <button type="submit">Send Message</button>
-            <div class="success-message" id="success-message" style="display:none;">Your message was sent!</div>
-        </form>
-    </div>
-</section>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
     (function () {
         emailjs.init("rQGNt0f_Ml5QfWl6J"); // Replace with your EmailJS public key
@@ -972,69 +670,167 @@
                 console.error("EmailJS Error:", error);
             });
     });
+        // Three.js Space Animation
+        let scene, camera, renderer, stars = [], planets = [], sun, moon;
+        let isDarkMode = false;
+
+        function initThreeJS() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-canvas'), alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0);
+
+            createStars();
+            createSun();
+            createMoon();
+            createPlanets();
+            
+            camera.position.z = 5;
+            animate();
+        }
+
+        function createStars() {
+            const starGeometry = new THREE.BufferGeometry();
+            const starCount = 1000;
+            const positions = new Float32Array(starCount * 3);
+
+            for (let i = 0; i < starCount; i++) {
+                positions[i * 3] = (Math.random() - 0.5) * 2000;
+                positions[i * 3 + 1] = (Math.random() - 0.5) * 2000;
+                positions[i * 3 + 2] = (Math.random() - 0.5) * 2000;
+            }
+
+            starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            
+            const starMaterial = new THREE.PointsMaterial({
+                color: isDarkMode ? 0xffffff : 0xffeb3b,
+                size: isDarkMode ? 2 : 1,
+                transparent: true,
+                opacity: isDarkMode ? 0.8 : 0.3
+            });
+
+            const starField = new THREE.Points(starGeometry, starMaterial);
+            scene.add(starField);
+            stars.push(starField);
+        }
+
+        function createSun() {
+            const sunGeometry = new THREE.SphereGeometry(2, 32, 32);
+            const sunMaterial = new THREE.MeshBasicMaterial({
+                color: 0xffeb3b,
+                transparent: true,
+                opacity: 0.3
+            });
+            sun = new THREE.Mesh(sunGeometry, sunMaterial);
+            sun.position.set(-10, 5, -10);
+            scene.add(sun);
+        }
+
+        function createMoon() {
+            const moonGeometry = new THREE.SphereGeometry(1.5, 32, 32);
+            const moonMaterial = new THREE.MeshBasicMaterial({
+                color: 0xf5f5f5,
+                transparent: true,
+                opacity: 0.0
+            });
+            moon = new THREE.Mesh(moonGeometry, moonMaterial);
+            moon.position.set(10, 5, -10);
+            scene.add(moon);
+        }
+
+        function createPlanets() {
+            const planetColors = [0x4fc3f7, 0x81c784, 0xba68c8, 0xffc107];
+            const planetSizes = [0.3, 0.5, 0.4, 0.6];
+            
+            for (let i = 0; i < 4; i++) {
+                const planetGeometry = new THREE.SphereGeometry(planetSizes[i], 16, 16);
+                const planetMaterial = new THREE.MeshBasicMaterial({
+                    color: planetColors[i],
+                    transparent: true,
+                    opacity: 0.4
+                });
+                const planet = new THREE.Mesh(planetGeometry, planetMaterial);
+                
+                const angle = (i / 4) * Math.PI * 2;
+                const radius = 15 + i * 3;
+                planet.position.set(
+                    Math.cos(angle) * radius,
+                    Math.sin(angle * 0.5) * 3,
+                    Math.sin(angle) * radius - 20
+                );
+                
+                scene.add(planet);
+                planets.push(planet);
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Rotate stars
+            stars.forEach(starField => {
+                starField.rotation.y += 0.0005;
+                starField.rotation.x += 0.0002;
+            });
+
+            // Animate sun
+            if (sun) {
+                sun.rotation.y += 0.01;
+                sun.position.y = 5 + Math.sin(Date.now() * 0.001) * 2;
+            }
+
+            // Animate moon
+            if (moon) {
+                moon.rotation.y += 0.008;
+                moon.position.y = 5 + Math.cos(Date.now() * 0.001) * 2;
+            }
+
+            // Animate planets
+            planets.forEach((planet, index) => {
+                const time = Date.now() * 0.001;
+                const angle = time * (0.2 + index * 0.1);
+                const radius = 15 + index * 3;
+                
+                planet.position.x = Math.cos(angle) * radius;
+                planet.position.z = Math.sin(angle) * radius - 20;
+                planet.position.y = Math.sin(time + index) * 3;
+                planet.rotation.y += 0.02;
+            });
+
+                       renderer.render(scene, camera);
+        }
+
+        // Theme Toggle Logic
         function toggleTheme() {
             const body = document.body;
-            const currentTheme = body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            body.setAttribute('data-theme', newTheme);
+            isDarkMode = !isDarkMode;
+            body.setAttribute("data-theme", isDarkMode ? "dark" : "light");
+
+            // Reset scene and stars
+            stars.forEach(star => scene.remove(star));
+            stars = [];
+            createStars();
+
+            // Update sun and moon visibility
+            sun.material.opacity = isDarkMode ? 0.0 : 0.3;
+            moon.material.opacity = isDarkMode ? 0.3 : 0.0;
         }
 
-        // Initialize AOS
+        // Resize Canvas on Window Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // AOS Init
         AOS.init({
             duration: 1000,
-            once: true,
-            offset: 100,
-            easing: 'ease-out-cubic'
+            once: true
         });
 
-        // Typing effect
-        const typingText = document.querySelector('.typing-effect');
-        const texts = ['B.Tech Student & Developer', 'Competitive Programmer', 'AI/ML Enthusiast', 'Full-Stack Developer'];
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-
-        function typeWriter() {
-            const currentText = texts[textIndex];
-            
-            if (isDeleting) {
-                typingText.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typingText.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
-            }
-
-            if (!isDeleting && charIndex === currentText.length) {
-                setTimeout(() => isDeleting = true, 2000);
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % texts.length;
-            }
-
-            const speed = isDeleting ? 50 : 100;
-            setTimeout(typeWriter, speed);
-        }
-
-        // Start typing effect after page loads
-        setTimeout(typeWriter, 2000);
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Add scroll effect to navbar
-        window.addEventListener('scroll', () => {
+         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
              const links = document.querySelectorAll('.nav-links a');
 
@@ -1054,9 +850,9 @@
         });
             }
         });
-        
 
-
+        // Initialize everything
+        initThreeJS();
     </script>
 </body>
 </html>
